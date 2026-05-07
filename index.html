@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нязик Тач — Digital Creator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b1120;
+      --card: #111827;
+      --border: rgba(255,255,255,0.08);
+      --accent: #3b82f6;
+      --accent2: #60a5fa;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --sub: #64748b;
+    }
+
+    html, body { height: 100%; overflow-x: hidden; }
+
+    body {
+      background: radial-gradient(ellipse at 30% 20%, #0f1f3d 0%, #080f1e 50%, #060b15 100%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .blob {
+      position: fixed; border-radius: 50%;
+      filter: blur(90px); pointer-events: none; z-index: 0;
+    }
+    .blob-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%);
+      top: -150px; left: -100px;
+    }
+    .blob-2 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(99,102,241,0.1), transparent 70%);
+      bottom: -100px; right: -80px;
+    }
+
+    .page {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%;
+    }
+
+    /* ── card ── */
+    .card {
+      width: 100%; max-width: 560px;
+      background: linear-gradient(145deg, #131f35, #0d1829);
+      border: 1px solid rgba(59,130,246,0.15);
+      border-radius: 28px;
+      padding: 36px 40px 36px 36px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      box-shadow:
+        0 0 0 1px rgba(59,130,246,0.05),
+        0 32px 80px rgba(0,0,0,0.7),
+        0 0 80px rgba(59,130,246,0.06) inset;
+      animation: cardIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── photo ── */
+    .photo-col {
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-wrap {
+      position: relative;
+      width: 148px; height: 186px;
+    }
+    .photo-ring {
+      position: absolute; inset: -3px;
+      border-radius: 999px;
+      background: linear-gradient(145deg, rgba(59,130,246,0.55), rgba(99,102,241,0.25), rgba(59,130,246,0.45));
+    }
+    .photo-img {
+      position: relative;
+      width: 100%; height: 100%;
+      border-radius: 999px;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid #0d1829;
+      display: block;
+    }
+
+    /* ── info ── */
+    .info-col { flex: 1; min-width: 0; }
+
+    .name {
+      font-size: clamp(1.65rem, 5vw, 2.15rem);
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sub);
+      margin-bottom: 20px;
+    }
+    .subtitle em { font-style: normal; color: var(--accent2); opacity: 0.85; }
+
+    /* features */
+    .features {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 22px;
+    }
+    .feat {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.87rem;
+      color: rgba(241,245,249,0.8);
+    }
+    .feat-icon {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent2);
+    }
+    .feat-icon svg {
+      width: 15px; height: 15px;
+      fill: none; stroke: currentColor;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* socials */
+    .socials {
+      display: flex; gap: 10px;
+      margin-bottom: 18px;
+    }
+    .soc {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+                  background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .soc:hover { transform: translateY(-3px) scale(1.12); }
+    .soc svg { width: 17px; height: 17px; fill: currentColor; }
+
+    .soc.tg:hover { color:#29b6f6; border-color:rgba(41,182,246,0.4);  box-shadow:0 6px 20px rgba(41,182,246,0.25); }
+    .soc.ig:hover { color:#f472b6; border-color:rgba(244,114,182,0.4); box-shadow:0 6px 20px rgba(244,114,182,0.25); }
+    .soc.tk:hover { color:#e5e5e5; border-color:rgba(229,229,229,0.3); box-shadow:0 6px 20px rgba(229,229,229,0.15); }
+    .soc.yt:hover { color:#f87171; border-color:rgba(248,113,113,0.4); box-shadow:0 6px 20px rgba(248,113,113,0.25); }
+
+    /* CTA */
+    .cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 50px; border: none;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 60%, #4f46e5 100%);
+      background-size: 200% 200%;
+      color: #fff;
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em;
+      text-decoration: none; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(59,130,246,0.4);
+      animation: ctaGrad 4s ease-in-out infinite alternate;
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    @keyframes ctaGrad {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .cta::before {
+      content: '';
+      position: absolute; top: -50%; left: -60%;
+      width: 35%; height: 200%;
+      background: rgba(255,255,255,0.18);
+      transform: skewX(-22deg);
+      animation: sheen 3s ease-in-out infinite;
+    }
+    @keyframes sheen { 0% { left: -60%; } 100% { left: 130%; } }
+    .cta:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 10px 30px rgba(59,130,246,0.5); }
+    .cta:active { transform: scale(0.98); }
+    .cta svg { flex-shrink: 0; width: 17px; height: 17px; fill: currentColor; }
+
+    @media (max-width: 500px) {
+      .card {
+        flex-direction: column; align-items: center;
+        text-align: center; padding: 32px 24px; gap: 24px;
+      }
+      .socials { justify-content: center; }
+      .photo-wrap { width: 128px; height: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="page">
+  <div class="card">
+
+    <!-- Photo -->
+    <div class="photo-col">
+      <div class="photo-wrap">
+        <div class="photo-ring"></div>
+        <img class="photo-img" src="photo.jpg" alt="Нязик Тач" />
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="info-col">
+
+      <h1 class="name">Нязик Тач</h1>
+      <p class="subtitle">DIGITAL CREATOR&nbsp;<em>✦</em></p>
+
+      <div class="features">
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm0 8c-4 0-6 2-6 3v1h12v-1c0-1-2-3-6-3z"/></svg>
+          </div>
+          Создательница «Бабушки Анны»
+        </div>
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          Вайб-кодинг без программирования
+        </div>
+        <div class="feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+          </div>
+          Помогаю запускать ИИ-продукты
+        </div>
+      </div>
+
+      <div class="socials">
+        <a class="soc tg" href="https://t.me/njasik_touch" target="_blank" rel="noopener" title="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.994 2C6.475 2 2 6.477 2 12s4.475 10 9.994 10C17.52 22 22 17.523 22 12S17.52 2 11.994 2zm4.912 6.86-1.91 9.01c-.144.637-.52.793-1.054.494l-2.92-2.152-1.406 1.353c-.156.156-.288.288-.59.288l.21-2.974 5.41-4.887c.235-.21-.051-.326-.366-.116l-6.687 4.21-2.879-.9c-.626-.196-.638-.626.13-.927l11.233-4.33c.52-.19.978.126.829.93z"/></svg>
+        </a>
+        <a class="soc ig" href="https://www.instagram.com/aibabushka40/" target="_blank" rel="noopener" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="fill:none">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a class="soc tk" href="https://www.tiktok.com/@aibabushka40" target="_blank" rel="noopener" title="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.23 8.23 0 0 0 4.83 1.55V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg>
+        </a>
+        <a class="soc yt" href="https://www.youtube.com/@aibabushka40" target="_blank" rel="noopener" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="fill:none">
+            <rect x="2" y="4" width="20" height="16" rx="4"/>
+            <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+      </div>
+
+      <a class="cta" href="https://t.me/njasik_touch" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M11.994 2C6.475 2 2 6.477 2 12s4.475 10 9.994 10C17.52 22 22 17.523 22 12S17.52 2 11.994 2zm4.912 6.86-1.91 9.01c-.144.637-.52.793-1.054.494l-2.92-2.152-1.406 1.353c-.156.156-.288.288-.59.288l.21-2.974 5.41-4.887c.235-.21-.051-.326-.366-.116l-6.687 4.21-2.879-.9c-.626-.196-.638-.626.13-.927l11.233-4.33c.52-.19.978.126.829.93z"/></svg>
+        Написать мне
+      </a>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
