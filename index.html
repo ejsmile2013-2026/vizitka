@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Нязик Тач — Digital Creator</title>
+  <title>Нязик Тач — Vibecoding & AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0b1120;
-      --card: #111827;
-      --border: rgba(255,255,255,0.08);
-      --accent: #3b82f6;
+      --bg:      #0b1120;
+      --card:    #111827;
+      --accent:  #3b82f6;
       --accent2: #60a5fa;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --sub: #64748b;
+      --text:    #f1f5f9;
+      --muted:   #94a3b8;
+      --sub:     #64748b;
     }
 
     html, body { height: 100%; overflow-x: hidden; }
@@ -23,7 +25,7 @@
     body {
       background: radial-gradient(ellipse at 30% 20%, #0f1f3d 0%, #080f1e 50%, #060b15 100%);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -52,7 +54,7 @@
       width: 100%;
     }
 
-    /* ── card ── */
+    /* ── Card ── */
     .card {
       width: 100%; max-width: 560px;
       background: linear-gradient(145deg, #131f35, #0d1829);
@@ -73,36 +75,34 @@
       to   { opacity: 1; transform: none; }
     }
 
-    /* ── photo ── */
+    /* ── Photo — still ── */
     .photo-col {
       flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
     }
     .photo-wrap {
-      position: relative;
       width: 148px; height: 186px;
-    }
-    .photo-ring {
-      position: absolute; inset: -3px;
       border-radius: 999px;
-      background: linear-gradient(145deg, rgba(59,130,246,0.55), rgba(99,102,241,0.25), rgba(59,130,246,0.45));
+      overflow: hidden;
+      border: 3px solid rgba(59,130,246,0.3);
+      box-shadow:
+        0 0 0 1px rgba(59,130,246,0.1),
+        0 8px 32px rgba(0,0,0,0.5);
     }
     .photo-img {
-      position: relative;
       width: 100%; height: 100%;
-      border-radius: 999px;
       object-fit: cover;
       object-position: center top;
-      border: 3px solid #0d1829;
       display: block;
     }
 
-    /* ── info ── */
+    /* ── Info ── */
     .info-col { flex: 1; min-width: 0; }
 
     .name {
+      font-family: 'Syne', system-ui, sans-serif;
       font-size: clamp(1.65rem, 5vw, 2.15rem);
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: -0.3px;
       color: #f1f5f9;
       margin-bottom: 4px;
@@ -117,7 +117,7 @@
     }
     .subtitle em { font-style: normal; color: var(--accent2); opacity: 0.85; }
 
-    /* features */
+    /* ── Features with icon boxes ── */
     .features {
       display: flex; flex-direction: column; gap: 10px;
       margin-bottom: 22px;
@@ -125,7 +125,8 @@
     .feat {
       display: flex; align-items: center; gap: 10px;
       font-size: 0.87rem;
-      color: rgba(241,245,249,0.8);
+      color: rgba(241,245,249,0.85);
+      font-weight: 500;
     }
     .feat-icon {
       width: 32px; height: 32px;
@@ -142,7 +143,15 @@
       stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* socials */
+    /* ── Divider ── */
+    .sep {
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent, rgba(59,130,246,0.2) 30%, rgba(59,130,246,0.2) 70%, transparent);
+      margin-bottom: 18px;
+    }
+
+    /* ── Socials ── */
     .socials {
       display: flex; gap: 10px;
       margin-bottom: 18px;
@@ -164,9 +173,12 @@
     .soc.tg:hover { color:#29b6f6; border-color:rgba(41,182,246,0.4);  box-shadow:0 6px 20px rgba(41,182,246,0.25); }
     .soc.ig:hover { color:#f472b6; border-color:rgba(244,114,182,0.4); box-shadow:0 6px 20px rgba(244,114,182,0.25); }
     .soc.tk:hover { color:#e5e5e5; border-color:rgba(229,229,229,0.3); box-shadow:0 6px 20px rgba(229,229,229,0.15); }
-    .soc.yt:hover { color:#f87171; border-color:rgba(248,113,113,0.4); box-shadow:0 6px 20px rgba(248,113,113,0.25); }
+    .soc.em:hover { color:#60a5fa; border-color:rgba(96,165,250,0.4);  box-shadow:0 6px 20px rgba(96,165,250,0.25); }
 
-    /* CTA */
+    .soc.ig svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .soc.ig svg .dot { fill: currentColor; stroke: none; }
+
+    /* ── CTA — WhatsApp, blue gradient ── */
     .cta {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%;
@@ -175,7 +187,8 @@
       background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 60%, #4f46e5 100%);
       background-size: 200% 200%;
       color: #fff;
-      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em;
+      font-family: 'Manrope', system-ui, sans-serif;
+      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.02em;
       text-decoration: none; cursor: pointer;
       box-shadow: 0 4px 18px rgba(59,130,246,0.4);
       animation: ctaGrad 4s ease-in-out infinite alternate;
@@ -217,10 +230,9 @@
 <div class="page">
   <div class="card">
 
-    <!-- Photo -->
+    <!-- Photo — still -->
     <div class="photo-col">
       <div class="photo-wrap">
-        <div class="photo-ring"></div>
         <img class="photo-img" src="photo.jpg" alt="Нязик Тач" />
       </div>
     </div>
@@ -234,7 +246,7 @@
       <div class="features">
         <div class="feat">
           <div class="feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 3c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm0 8c-4 0-6 2-6 3v1h12v-1c0-1-2-3-6-3z"/></svg>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
           </div>
           Создательница «Бабушки Анны»
         </div>
@@ -246,37 +258,44 @@
         </div>
         <div class="feat">
           <div class="feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           Помогаю запускать ИИ-продукты
         </div>
       </div>
 
+      <div class="sep"></div>
+
       <div class="socials">
-        <a class="soc tg" href="https://t.me/njasik_touch" target="_blank" rel="noopener" title="Telegram">
+        <!-- Telegram -->
+        <a class="soc tg" href="https://t.me/njasik_touch" target="_blank" rel="noopener" title="Telegram @njasik_touch">
           <svg viewBox="0 0 24 24"><path d="M11.994 2C6.475 2 2 6.477 2 12s4.475 10 9.994 10C17.52 22 22 17.523 22 12S17.52 2 11.994 2zm4.912 6.86-1.91 9.01c-.144.637-.52.793-1.054.494l-2.92-2.152-1.406 1.353c-.156.156-.288.288-.59.288l.21-2.974 5.41-4.887c.235-.21-.051-.326-.366-.116l-6.687 4.21-2.879-.9c-.626-.196-.638-.626.13-.927l11.233-4.33c.52-.19.978.126.829.93z"/></svg>
         </a>
-        <a class="soc ig" href="https://www.instagram.com/aibabushka40/" target="_blank" rel="noopener" title="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="fill:none">
+        <!-- Instagram @ki40plus -->
+        <a class="soc ig" href="https://www.instagram.com/ki40plus/" target="_blank" rel="noopener" title="Instagram @ki40plus">
+          <svg viewBox="0 0 24 24">
             <rect x="2" y="2" width="20" height="20" rx="5"/>
             <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+            <circle class="dot" cx="17.5" cy="6.5" r="0.9"/>
           </svg>
         </a>
+        <!-- TikTok -->
         <a class="soc tk" href="https://www.tiktok.com/@aibabushka40" target="_blank" rel="noopener" title="TikTok">
-          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.23 8.23 0 0 0 4.83 1.55V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.23 8.23 0 0 0 4.83 1.55V6.79a4.85 4.85 0 0 1-1.06-.1z"/></svg>
         </a>
-        <a class="soc yt" href="https://www.youtube.com/@aibabushka40" target="_blank" rel="noopener" title="YouTube">
+        <!-- Email -->
+        <a class="soc em" href="mailto:njasik@icloud.com" title="Email njasik@icloud.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="fill:none">
-            <rect x="2" y="4" width="20" height="16" rx="4"/>
-            <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+            <rect x="2" y="4" width="20" height="16" rx="3"/>
+            <polyline points="2,4 12,13 22,4"/>
           </svg>
         </a>
       </div>
 
-      <a class="cta" href="https://t.me/njasik_touch" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M11.994 2C6.475 2 2 6.477 2 12s4.475 10 9.994 10C17.52 22 22 17.523 22 12S17.52 2 11.994 2zm4.912 6.86-1.91 9.01c-.144.637-.52.793-1.054.494l-2.92-2.152-1.406 1.353c-.156.156-.288.288-.59.288l.21-2.974 5.41-4.887c.235-.21-.051-.326-.366-.116l-6.687 4.21-2.879-.9c-.626-.196-.638-.626.13-.927l11.233-4.33c.52-.19.978.126.829.93z"/></svg>
-        Написать мне
+      <!-- WhatsApp button, blue gradient как на скриншоте -->
+      <a class="cta" href="https://wa.me/14156139969" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        Написать в WhatsApp
       </a>
 
     </div>
